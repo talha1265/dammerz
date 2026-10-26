@@ -321,7 +321,7 @@ export default function PitchDeckPage() {
       </div>
 
       {/* Global CSS for Print Mode */}
-      <style jsx global>{`
+      <style>{`
         @media print {
           .no-print {
             display: none !important;
