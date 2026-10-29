@@ -9,14 +9,12 @@ import WhatsAppSimulator from '@/components/WhatsAppSimulator';
 import EmployeeManager from '@/components/EmployeeManager';
 import SalesPipeline from '@/components/SalesPipeline';
 import TenderReports from '@/components/TenderReports';
-import AICallingStudio from '@/components/AICallingStudio';
 import SubscriptionManager from '@/components/SubscriptionManager';
 import ProfileAndSettings from '@/components/ProfileAndSettings';
 import BillsAndExcelHub from '@/components/BillsAndExcelHub';
-import MarketingConnectorsHub from '@/components/MarketingConnectorsHub';
 import TeamOpsChatHub from '@/components/TeamOpsChatHub';
 import OperationsGuideModal from '@/components/OperationsGuideModal';
-import MetaAdsManagerHub from '@/components/MetaAdsManagerHub';
+import AIEmployeeHub from '@/components/AIEmployeeHub';
 import { 
   Bot, 
   MessageSquare, 
@@ -404,23 +402,26 @@ export default function DashboardPage() {
                   transition: 'all 0.22s cubic-bezier(0.16, 1, 0.3, 1)', 
                   position: 'relative',
                 }}
-                title="Click to open Voice AI Calling Studio"
+                title="Click to open Pooja Sharma's Calling Cockpit"
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                  <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>AI Voice Caller</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>Pooja Sharma (AI SDR)</span>
+                    <span style={{ fontSize: '0.66rem', padding: '1px 5px', borderRadius: '4px', background: 'rgba(236, 72, 153, 0.15)', color: '#ec4899', fontWeight: 700 }}>EMP-AI-01</span>
+                  </div>
                   <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(236, 72, 153, 0.12)', border: '1px solid rgba(236, 72, 153, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <PhoneCall size={18} color={business.subscriptionTier !== 'starter' ? 'var(--brand-amber)' : 'var(--text-dim)'} />
+                    <PhoneCall size={18} color={business.subscriptionTier !== 'starter' ? '#ec4899' : 'var(--text-dim)'} />
                   </div>
                 </div>
-                <div style={{ fontSize: '1.85rem', fontWeight: 800, color: business.subscriptionTier !== 'starter' ? 'var(--brand-amber)' : 'var(--text-dim)', letterSpacing: '-0.03em' }}>
+                <div style={{ fontSize: '1.85rem', fontWeight: 800, color: business.subscriptionTier !== 'starter' ? '#ec4899' : 'var(--text-dim)', letterSpacing: '-0.03em' }}>
                   {business.subscriptionTier !== 'starter' ? `${business.monthlyQuota?.aiCallingMinutesUsed || 0} / ${business.monthlyQuota?.aiCallingMinutes || (business.subscriptionTier === 'premium' ? 600 : 120)} Mins` : 'Locked'}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '8px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.76rem', color: business.subscriptionTier !== 'starter' ? 'var(--brand-amber)' : 'var(--text-dim)' }}>
-                    <Activity size={13} />
-                    <span>{business.subscriptionTier !== 'starter' ? `${callsCount} Calls Dialed (Live Speech synthesis)` : 'Included in Growth (120m) & Premium (600m)'}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.76rem', color: business.subscriptionTier !== 'starter' ? 'var(--text-muted)' : 'var(--text-dim)' }}>
+                    <Activity size={13} color="#ec4899" />
+                    <span>{business.subscriptionTier !== 'starter' ? `${callsCount} Calls Dialed • Bilingual Voice` : 'Included in Growth (120m) & Premium'}</span>
                   </div>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--brand-amber)', fontWeight: 700 }}>Open Tab →</span>
+                  <span style={{ fontSize: '0.72rem', color: '#ec4899', fontWeight: 700 }}>Open Desk →</span>
                 </div>
               </div>
 
@@ -555,17 +556,24 @@ export default function DashboardPage() {
 
               <div className="vibe-card vibe-card-glow-indigo" style={{ padding: '22px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                    <Video size={20} color="#60a5fa" />
-                    <h3 style={{ fontSize: '1.05rem', color: 'var(--text-main)', margin: 0 }}>Meta Video Ads AI</h3>
-                    <span className="badge badge-whatsapp" style={{ fontSize: '0.62rem' }}>AUTONOMOUS</span>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <Bot size={20} color="var(--brand-primary-light)" />
+                      <h3 style={{ fontSize: '1.05rem', color: 'var(--text-main)', margin: 0 }}>Autonomous AI Employees</h3>
+                    </div>
+                    <span className="badge badge-ai" style={{ fontSize: '0.62rem' }}>3 ON DUTY</span>
                   </div>
-                  <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', lineHeight: '1.5', marginBottom: '16px' }}>
-                    Upload industrial reels, let AI generate 3 high-converting B2B hooks, and launch autonomous Click-to-WhatsApp campaigns.
+                  <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', lineHeight: '1.5', marginBottom: '12px' }}>
+                    Your dedicated AI team: <strong>Pooja</strong> (Voice Calling SDR), <strong>Kabir</strong> (Performance Ads Manager), and <strong>Neha</strong> (Market Intelligence Officer).
                   </p>
+                  <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '14px' }}>
+                    <span style={{ fontSize: '0.72rem', padding: '2px 7px', borderRadius: '4px', background: 'rgba(236, 72, 153, 0.1)', color: '#ec4899' }}>📞 Pooja: Voice SDR</span>
+                    <span style={{ fontSize: '0.72rem', padding: '2px 7px', borderRadius: '4px', background: 'rgba(59, 130, 246, 0.1)', color: '#60a5fa' }}>📹 Kabir: Video Ads</span>
+                    <span style={{ fontSize: '0.72rem', padding: '2px 7px', borderRadius: '4px', background: 'rgba(16, 185, 129, 0.1)', color: '#34d399' }}>🌐 Neha: Research</span>
+                  </div>
                 </div>
-                <button onClick={() => setActiveTab('meta_ads')} className="btn btn-outline" style={{ width: '100%', fontSize: '0.82rem' }}>
-                  Manage Video Ads <ArrowRight size={14} />
+                <button onClick={() => setActiveTab('ai_agents')} className="btn btn-outline" style={{ width: '100%', fontSize: '0.82rem', borderColor: 'rgba(99, 102, 241, 0.4)', color: 'var(--brand-primary-light)' }}>
+                  Manage AI Employees Roster <ArrowRight size={14} />
                 </button>
               </div>
 
@@ -626,17 +634,19 @@ export default function DashboardPage() {
           <EmployeeManager onRefresh={handleRefreshAll} />
         )}
 
-        {/* TAB 4: MARKETING CONNECTORS & RESEARCH */}
-        {activeTab === 'connectors' && (
-          <MarketingConnectorsHub onRefresh={handleRefreshAll} />
-        )}
-
-        {/* TAB: META VIDEO ADS AI AUTONOMOUS MANAGER */}
-        {activeTab === 'meta_ads' && (
-          <MetaAdsManagerHub
+        {/* TAB: AUTONOMOUS AI EMPLOYEE AGENTS DEPARTMENT */}
+        {(activeTab === 'ai_agents' || activeTab === 'calling' || activeTab === 'meta_ads' || activeTab === 'connectors') && (
+          <AIEmployeeHub
             business={business}
             onRefreshData={handleRefreshAll}
-            onTriggerCall={handleTriggerCallFromLead}
+            onOpenUpgrade={() => setShowUpgradeModal(true)}
+            initialAgent={
+              activeTab === 'calling' ? 'pooja' :
+              activeTab === 'meta_ads' ? 'kabir' :
+              activeTab === 'connectors' ? 'neha' : 'all'
+            }
+            activeLeadForCall={activeLeadForCall}
+            onTriggerCallFromLead={handleTriggerCallFromLead}
           />
         )}
 
@@ -656,16 +666,6 @@ export default function DashboardPage() {
         {/* TAB 7: TENDER REPORTS */}
         {activeTab === 'reports' && (
           <TenderReports onRefresh={handleRefreshAll} />
-        )}
-
-        {/* TAB 8: AI CALLING STUDIO */}
-        {activeTab === 'calling' && (
-          <AICallingStudio
-            business={business}
-            onRefresh={handleRefreshAll}
-            onOpenUpgrade={() => setShowUpgradeModal(true)}
-            initialLead={activeLeadForCall}
-          />
         )}
 
         {/* TAB 9: SUBSCRIPTIONS & PLANS */}

@@ -72,21 +72,22 @@ export default function Navbar({
 
   const allTabs = [
     { id: 'overview', label: 'Fleet Overview', icon: Bot, category: 'core' },
-    { id: 'ops_chat', label: 'Team Ops Chat', icon: Users, badge: 'LIVE', category: 'core' },
-    { id: 'whatsapp', label: 'WhatsApp Simulator', icon: MessageSquare, category: 'core' },
-    { id: 'employees', label: 'Staff Roster & IDs', icon: HardHat, category: 'core' },
-    { id: 'meta_ads', label: 'Meta Video Ads AI', icon: Video, badge: 'AUTONOMOUS', category: 'growth' },
-    { id: 'sales', label: 'IndiaMart & Google Leads', icon: Zap, category: 'growth' },
-    { id: 'connectors', label: 'Marketing Connectors', icon: Globe, category: 'growth' },
-    { id: 'bills', label: 'Bills & GST Hub', icon: FileSpreadsheet, category: 'finance' },
-    { id: 'reports', label: 'Tender Reports', icon: Building2, category: 'finance' },
+    { id: 'ai_agents', label: 'AI Employees Hub', icon: Bot, badge: '3 AGENTS', category: 'ai_agents' },
     { 
       id: 'calling', 
-      label: 'AI Voice Calling', 
+      label: 'Pooja (AI Calling)', 
       icon: PhoneCall, 
       badge: business.subscriptionTier === 'premium' ? '10h' : business.subscriptionTier === 'growth' ? '2h' : 'VOICE',
-      category: 'finance' 
+      category: 'ai_agents' 
     },
+    { id: 'meta_ads', label: 'Kabir (AI Ads Manager)', icon: Video, badge: 'AUTONOMOUS', category: 'ai_agents' },
+    { id: 'connectors', label: 'Neha (AI Researcher)', icon: Globe, category: 'ai_agents' },
+    { id: 'ops_chat', label: 'Team Ops Chat', icon: Users, badge: 'LIVE', category: 'core' },
+    { id: 'whatsapp', label: 'WhatsApp Simulator', icon: MessageSquare, category: 'core' },
+    { id: 'employees', label: 'Human Staff Roster', icon: HardHat, category: 'core' },
+    { id: 'sales', label: 'IndiaMart & Google Leads', icon: Zap, category: 'growth' },
+    { id: 'bills', label: 'Bills & GST Hub', icon: FileSpreadsheet, category: 'finance' },
+    { id: 'reports', label: 'Tender Reports', icon: Building2, category: 'finance' },
     { id: 'billing', label: 'Plans & Subscription', icon: Sparkles, category: 'system' },
     { id: 'profile', label: 'Profile & Settings', icon: User, category: 'system' },
   ];
@@ -283,9 +284,10 @@ export default function Navbar({
           }}>
             {[
               { id: 'all', label: 'All Modules' },
+              { id: 'ai_agents', label: '🤖 AI Employees' },
               { id: 'core', label: 'Operations' },
-              { id: 'growth', label: 'Growth & Ads' },
-              { id: 'finance', label: 'Finance & Voice' },
+              { id: 'growth', label: 'Growth & Leads' },
+              { id: 'finance', label: 'Accounts & Bills' },
               { id: 'system', label: 'Settings & Plans' },
             ].map((cat) => {
               const isSelected = selectedCategory === cat.id;
