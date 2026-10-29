@@ -34,52 +34,89 @@ export async function POST(req: Request) {
 
     // =========================================================================
     // STEP 1: NEHA VERMA (AI MARKET RESEARCHER) RESEARCHES & SORTS MARKET LEADS
+    // RULE: Base Subscription -> Google Shop & Google Search only
+    //       Premium Subscription -> IndiaMart AND Google Shop/Google both unlocked
     // =========================================================================
     if (action === 'run_neha_research') {
       const topic = customTopic || business.category || 'Industrial Valves & Flow Controls';
-      
-      // Sorted high-intent buyer leads discovered by Neha
-      const sortedLeadsFromNeha = [
-        {
-          clientName: 'Vikram Singhania (Singhania Infra Projects Ltd)',
-          phone: '+91 98201 44890',
-          source: 'indiamart' as const,
-          productName: '180 Units Heavy Duty Flanged Ball Valves 2" (Class 150)',
-          quantity: '180 Units',
-          estimatedValue: 1450000,
-          status: 'new' as const,
-          aiScore: 96,
-          notes: 'Neha Verma Intelligence: High-urgency procurement for refinery expansion. Contractor delayed by previous vendor. Budget approved, immediate advance payment ready upon PO.',
-          location: 'Jamnagar, Gujarat',
-          deliveryUrgency: 'Within 10 Days',
-        },
-        {
-          clientName: 'Karan Oberoi (Oberoi Pipeline Engineering)',
-          phone: '+91 98112 55210',
-          source: 'website' as const,
-          productName: '500 Meters Seamless Alloy Steel Pipes (Grade P11)',
-          quantity: '500 Meters',
-          estimatedValue: 2480000,
-          status: 'new' as const,
-          aiScore: 93,
-          notes: 'Neha Verma Intelligence: Government water grid subcontract tender requirement. Technical compliance sheet verified against Indian Standards.',
-          location: 'Pune, Maharashtra',
-          deliveryUrgency: 'Within 15 Days',
-        },
-        {
-          clientName: 'Alok Mathur (Metro Boiler Works & Fab)',
-          phone: '+91 97180 88231',
-          source: 'indiamart' as const,
-          productName: '40 MT High-Tensile Boiler Grade Steel Plates',
-          quantity: '40 Metric Tonnes',
-          estimatedValue: 3200000,
-          status: 'new' as const,
-          aiScore: 89,
-          notes: 'Neha Verma Intelligence: Commercial inquiry for thermal expansion unit. Looking for prompt mill test certificates (MTC) & delivery guarantee.',
-          location: 'Faridabad, Haryana',
-          deliveryUrgency: 'Within 20 Days',
-        },
-      ];
+      const isPremium = business.subscriptionTier === 'premium';
+
+      // Leads generated based on subscription tier access
+      const sortedLeadsFromNeha = isPremium
+        ? [
+            {
+              clientName: 'Vikram Singhania (Singhania Infra Projects Ltd)',
+              phone: '+91 98201 44890',
+              source: 'indiamart' as const,
+              sourceLabel: 'IndiaMart Verified B2B RFQ (Premium)',
+              productName: '180 Units Heavy Duty Flanged Ball Valves 2" (Class 150)',
+              quantity: '180 Units',
+              estimatedValue: 1450000,
+              status: 'new' as const,
+              aiScore: 96,
+              notes: 'Neha Verma Intelligence (IndiaMart Unlocked): High-urgency procurement for refinery expansion. Budget approved, immediate advance payment ready upon PO.',
+              location: 'Jamnagar, Gujarat',
+              deliveryUrgency: 'Within 10 Days',
+            },
+            {
+              clientName: 'Karan Oberoi (Oberoi Pipeline Engineering)',
+              phone: '+91 98112 55210',
+              source: 'google_shop' as const,
+              sourceLabel: 'Google Shopping / Merchant Feed',
+              productName: '500 Meters Seamless Alloy Steel Pipes (Grade P11)',
+              quantity: '500 Meters',
+              estimatedValue: 2480000,
+              status: 'new' as const,
+              aiScore: 93,
+              notes: 'Neha Verma Intelligence (Google Shop): Google Merchant feed inquiry for industrial piping.',
+              location: 'Pune, Maharashtra',
+              deliveryUrgency: 'Within 15 Days',
+            },
+            {
+              clientName: 'Alok Mathur (Metro Boiler Works & Fab)',
+              phone: '+91 97180 88231',
+              source: 'indiamart' as const,
+              sourceLabel: 'IndiaMart Direct BuyLead (Premium)',
+              productName: '40 MT High-Tensile Boiler Grade Steel Plates',
+              quantity: '40 Metric Tonnes',
+              estimatedValue: 3200000,
+              status: 'new' as const,
+              aiScore: 89,
+              notes: 'Neha Verma Intelligence (IndiaMart Unlocked): Commercial inquiry for thermal expansion unit. Looking for prompt MTC certificate.',
+              location: 'Faridabad, Haryana',
+              deliveryUrgency: 'Within 20 Days',
+            },
+          ]
+        : [
+            {
+              clientName: 'Siddharth Verma (Apex Green Energy Ltd)',
+              phone: '+91 98450 12890',
+              source: 'google_shop' as const,
+              sourceLabel: 'Google Shopping / Merchant Feed (Base)',
+              productName: '10 Sets Solar Inverter & Industrial Pump Units 10HP',
+              quantity: '10 Sets',
+              estimatedValue: 420000,
+              status: 'new' as const,
+              aiScore: 91,
+              notes: 'Neha Verma Intelligence (Google Shop): Direct buyer inquiry from Google Shopping catalog feed.',
+              location: 'Ahmedabad, Gujarat',
+              deliveryUrgency: 'Within 12 Days',
+            },
+            {
+              clientName: 'Naveen Agarwal (Agarwal Electrical & Hardware)',
+              phone: '+91 97110 33491',
+              source: 'website' as const,
+              sourceLabel: 'Google Search Organic Inquiry (Base)',
+              productName: '60 Units Industrial Submersible Pumps & Valves',
+              quantity: '60 Units',
+              estimatedValue: 380000,
+              status: 'new' as const,
+              aiScore: 87,
+              notes: 'Neha Verma Intelligence (Google Search): Organic search commercial requirement.',
+              location: 'Kanpur, Uttar Pradesh',
+              deliveryUrgency: 'Within 15 Days',
+            },
+          ];
 
       // Save top sorted lead to the database
       const createdLeads = [];
@@ -106,7 +143,14 @@ export async function POST(req: Request) {
           code: 'EMP-AI-RES03',
           role: 'AI Market Intelligence Officer',
         },
-        summary: `Neha scanned ${topic} market across IndiaMart, GeM tenders, and verified portals. Extracted and sorted ${createdLeads.length} prioritized B2B RFQs.`,
+        tierAccess: isPremium ? 'premium_unlocked' : 'base_restricted',
+        isIndiaMartLocked: !isPremium,
+        activeChannels: isPremium 
+          ? ['IndiaMart B2B BuyLeads', 'Google Shopping & Merchant Center', 'Google Organic Search']
+          : ['Google Shopping & Merchant Center', 'Google Organic Search'],
+        summary: isPremium
+          ? `Neha Verma scanned both IndiaMart and Google Shop/Google simultaneously (Premium Subscription Unlocked). Discovered and sorted ${createdLeads.length} prioritized high-value RFQs.`
+          : `Neha Verma scanned Google Shop and Google Search (Base Subscription). Discovered ${createdLeads.length} leads. Note: IndiaMart B2B BuyLeads research is locked on Base Plan (Requires Premium upgrade).`,
         sortedLeads: createdLeads,
       });
     }
@@ -248,27 +292,40 @@ export async function POST(req: Request) {
     if (action === 'run_full_autonomous_scenario') {
       const topic = customTopic || business.category || 'Industrial Valves & Flow Controls';
 
-      // 1. Neha's Research
-      const targetLead = {
-        clientName: 'Vikram Singhania (Singhania Infra Projects Ltd)',
-        phone: '+91 98201 44890',
-        productName: '180 Units Heavy Duty Flanged Ball Valves 2" (Class 150)',
-        quantity: '180 Units',
-        estimatedValue: 1450000,
-        aiScore: 96,
-        location: 'Jamnagar, Gujarat',
-      };
+      // 1. Neha's Research (Respects Tier: IndiaMart on Premium, Google Shop on Base)
+      const isPremium = business.subscriptionTier === 'premium';
+      const targetLead = isPremium
+        ? {
+            clientName: 'Vikram Singhania (Singhania Infra Projects Ltd)',
+            phone: '+91 98201 44890',
+            productName: '180 Units Heavy Duty Flanged Ball Valves 2" (Class 150)',
+            quantity: '180 Units',
+            estimatedValue: 1450000,
+            aiScore: 96,
+            source: 'indiamart' as const,
+            location: 'Jamnagar, Gujarat',
+          }
+        : {
+            clientName: 'Siddharth Verma (Apex Green Energy Ltd)',
+            phone: '+91 98450 12890',
+            productName: '10 Sets Solar Inverter & Industrial Pump Units 10HP',
+            quantity: '10 Sets',
+            estimatedValue: 420000,
+            aiScore: 91,
+            source: 'google_shop' as const,
+            location: 'Ahmedabad, Gujarat',
+          };
 
       const savedLead = await db.addLead({
         clientName: targetLead.clientName,
         phone: targetLead.phone,
-        source: 'indiamart',
+        source: targetLead.source,
         productName: targetLead.productName,
         quantity: targetLead.quantity,
         estimatedValue: targetLead.estimatedValue,
         status: 'contacted',
         aiScore: targetLead.aiScore,
-        notes: `Autonomous Pipeline Run: Neha Verma scanned ${topic} market, identified high intent buyer with urgent requirement.`,
+        notes: `Autonomous Pipeline Run: Neha Verma scanned ${topic} on ${isPremium ? 'IndiaMart & Google (Premium Unlocked)' : 'Google Shop & Google (Base Plan)'}.`,
       });
 
       // 2. Pooja's Call

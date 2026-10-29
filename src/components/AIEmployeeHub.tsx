@@ -83,6 +83,7 @@ export default function AIEmployeeHub({
     }
   }, [initialAgent]);
 
+  const isPremium = business.subscriptionTier === 'premium';
   const hasVoiceAccess = business.subscriptionTier === 'growth' || business.subscriptionTier === 'premium';
   const callingMinsUsed = business.monthlyQuota?.aiCallingMinutesUsed || 0;
   const callingMinsTotal = business.monthlyQuota?.aiCallingMinutes || (
@@ -253,15 +254,23 @@ export default function AIEmployeeHub({
       avatarBg: 'linear-gradient(135deg, #10b981, #059669)',
       avatarIcon: Globe,
       status: 'researching',
-      statusText: 'Active • Scanning Marketplaces & Tenders',
+      statusText: isPremium 
+        ? 'Active • Scanning IndiaMart B2B & Google Shop (Premium Unlocked)' 
+        : 'Active • Scanning Google Shop & Google Search (Base Plan)',
       statusColor: '#10b981',
       shift: '24/7 Autonomous',
-      specialties: ['IndiaMart & GeM Marketplace Sync', 'Competitor Catalog & Price Benchmark', 'Tender Opportunity Scouting', 'Automated Lead Enrichment'],
-      bio: 'Neha scans industrial portals, IndiaMart BuyLeads, and GeM tenders to discover high-budget buyer requirements. She sorts and priority-ranks the leads with verified contact details, then dispatches them directly to Pooja for voice qualification.',
-      currentTask: 'Monitoring live commercial feeds, sorting RFQs, and feeding hot leads to Pooja.',
+      specialties: isPremium
+        ? ['IndiaMart B2B BuyLeads (Unlocked 💎)', 'Google Shopping / Merchant Feed', 'Google Organic Search RFQs', 'GeM Tender Opportunity Scouting']
+        : ['Google Shopping / Merchant Feed (Active)', 'Google Organic Search Inquiries', 'IndiaMart B2B BuyLeads (🔒 Premium Locked)'],
+      bio: isPremium
+        ? 'Neha conducts multi-channel research across both IndiaMart B2B BuyLeads and Google Shop/Google simultaneously (Premium Subscription). She priority-sorts verified buyer RFQs and hands them off directly to Pooja.'
+        : 'Neha scans Google Shop and Google Search for buyer inquiries on the Base Subscription. Upgrading to Premium unlocks IndiaMart B2B BuyLeads and government tender RFQs, providing high-value procurement RFQs directly to Pooja and Ritik.',
+      currentTask: isPremium
+        ? 'Researching both IndiaMart and Google Shop; priority-sorting hot buyer RFQs for Pooja.'
+        : 'Researching Google Shop & Google Search; IndiaMart BuyLeads locked on Base Plan.',
       metrics: [
-        { label: 'Market Scope', value: business.category || 'Industrial Supplies', hint: 'Industry focused' },
-        { label: 'Connected Channels', value: 'IndiaMart, GeM, Google', hint: 'Auto-sync active' },
+        { label: 'Active Channels', value: isPremium ? 'IndiaMart + Google' : 'Google Shop & Search', hint: isPremium ? 'Full B2B access' : 'Base plan scope' },
+        { label: 'IndiaMart B2B', value: isPremium ? 'Unlocked 💎' : 'Locked 🔒 (Upgrade)', hint: isPremium ? 'Active scanning' : 'Requires Premium' },
         { label: 'Dispatched to Pooja', value: 'Continuous Hand-off', hint: 'Zero latency' },
       ],
     },
@@ -715,8 +724,28 @@ export default function AIEmployeeHub({
                   ) : null}
                 </div>
                 <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
-                  Scans IndiaMart & tenders, priority-sorts hot buyer RFQs, and extracts verified contacts.
+                  {isPremium 
+                    ? '💎 Premium Plan: Scans both IndiaMart B2B BuyLeads and Google Shop/Google simultaneously.'
+                    : 'ℹ️ Base Plan: Scans Google Shop & Google Search only. (IndiaMart locked)'}
                 </div>
+                {!isPremium && onOpenUpgrade && (
+                  <button
+                    onClick={onOpenUpgrade}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: 'var(--brand-amber)',
+                      fontSize: '0.7rem',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      padding: '4px 0 0',
+                      textAlign: 'left',
+                      display: 'block',
+                    }}
+                  >
+                    Unlock IndiaMart B2B on Premium →
+                  </button>
+                )}
                 <button
                   onClick={handleRunNehaResearch}
                   disabled={pipelineRunning}
@@ -860,6 +889,41 @@ export default function AIEmployeeHub({
 
               {step1Result?.sortedLeads ? (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  {step1Result?.isIndiaMartLocked && (
+                    <div style={{
+                      padding: '8px 12px',
+                      borderRadius: '8px',
+                      background: 'rgba(251, 191, 36, 0.08)',
+                      border: '1px solid rgba(251, 191, 36, 0.25)',
+                      fontSize: '0.74rem',
+                      color: '#fbbf24',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      flexWrap: 'wrap',
+                      gap: '8px',
+                    }}>
+                      <span>🔒 <strong>Base Plan:</strong> Researching Google Shop & Google Search. IndiaMart locked.</span>
+                      {onOpenUpgrade && (
+                        <button 
+                          onClick={onOpenUpgrade}
+                          style={{
+                            background: '#fbbf24',
+                            color: '#111',
+                            border: 'none',
+                            padding: '3px 8px',
+                            borderRadius: '4px',
+                            fontSize: '0.68rem',
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                          }}
+                        >
+                          Unlock IndiaMart
+                        </button>
+                      )}
+                    </div>
+                  )}
+
                   {step1Result.sortedLeads.map((ld: any, idx: number) => (
                     <div 
                       key={idx}
@@ -875,9 +939,21 @@ export default function AIEmployeeHub({
                           <strong style={{ fontSize: '0.86rem', color: 'var(--text-main)' }}>{ld.clientName}</strong>
                           <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>{ld.location} • {ld.phone}</div>
                         </div>
-                        <span style={{ fontSize: '0.72rem', padding: '2px 6px', borderRadius: '4px', background: 'rgba(16, 185, 129, 0.15)', color: '#34d399', fontWeight: 700 }}>
-                          🔥 Match {ld.aiScore}%
-                        </span>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
+                          <span style={{ fontSize: '0.72rem', padding: '2px 6px', borderRadius: '4px', background: 'rgba(16, 185, 129, 0.15)', color: '#34d399', fontWeight: 700 }}>
+                            🔥 Match {ld.aiScore}%
+                          </span>
+                          <span style={{
+                            fontSize: '0.65rem',
+                            padding: '1px 5px',
+                            borderRadius: '3px',
+                            background: ld.source === 'indiamart' ? 'rgba(236, 72, 153, 0.15)' : 'rgba(59, 130, 246, 0.15)',
+                            color: ld.source === 'indiamart' ? '#f472b6' : '#60a5fa',
+                            fontWeight: 600,
+                          }}>
+                            {ld.sourceLabel || (ld.source === 'indiamart' ? 'IndiaMart RFQ' : 'Google Shop')}
+                          </span>
+                        </div>
                       </div>
                       <div style={{ fontSize: '0.8rem', color: 'var(--brand-primary-light)', margin: '4px 0', fontWeight: 600 }}>
                         {ld.productName}
@@ -1284,7 +1360,9 @@ export default function AIEmployeeHub({
                   <span className="vibe-live-pill" style={{ fontSize: '0.65rem', padding: '1px 6px' }}>ON DUTY</span>
                 </div>
                 <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                  Market Intelligence & Sourcing • Scans IndiaMart & GeM • Delivers Sorted Leads to Pooja Sharma
+                  {isPremium 
+                    ? '💎 Premium Plan: Active research on both IndiaMart B2B & Google Shop/Google simultaneously'
+                    : 'ℹ️ Base Plan: Active research on Google Shop & Google Search (IndiaMart B2B requires Premium upgrade)'}
                 </div>
               </div>
             </div>
