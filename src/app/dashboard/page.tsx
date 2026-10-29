@@ -13,8 +13,10 @@ import SubscriptionManager from '@/components/SubscriptionManager';
 import ProfileAndSettings from '@/components/ProfileAndSettings';
 import BillsAndExcelHub from '@/components/BillsAndExcelHub';
 import TeamOpsChatHub from '@/components/TeamOpsChatHub';
-import OperationsGuideModal from '@/components/OperationsGuideModal';
 import AIEmployeeHub from '@/components/AIEmployeeHub';
+import OperationsHub from '@/components/OperationsHub';
+import SettingsHub from '@/components/SettingsHub';
+import OperationsGuideModal from '@/components/OperationsGuideModal';
 import { 
   Bot, 
   MessageSquare, 
@@ -272,16 +274,13 @@ export default function DashboardPage() {
             }}>
               <span style={{ fontSize: '0.74rem', color: 'var(--text-dim)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', marginRight: '2px', display: 'flex', alignItems: 'center', gap: '5px' }}>
                 <Sparkle size={13} color="var(--brand-primary-light)" />
-                Quick Launch:
+                Direct Access Pillars:
               </span>
               {[
-                { id: 'whatsapp', label: 'WhatsApp Bot', icon: MessageSquare, color: 'var(--brand-whatsapp)' },
-                { id: 'ops_chat', label: 'Team Ops Chat', icon: Users, color: 'var(--brand-primary-light)' },
-                { id: 'meta_ads', label: 'Meta Video Ads', icon: Video, color: '#60a5fa' },
-                { id: 'employees', label: 'Staff Roster', icon: HardHat, color: '#fbbf24' },
-                { id: 'sales', label: 'IndiaMart Leads', icon: Zap, color: '#f59e0b' },
-                { id: 'bills', label: 'Ledger & Bills', icon: FileSpreadsheet, color: '#a78bfa' },
-                { id: 'calling', label: 'Voice AI Studio', icon: PhoneCall, color: '#fb7185' },
+                { id: 'ai_workforce', label: '🤖 AI Workforce (4 Agents)', icon: Bot, color: 'var(--brand-primary-light)' },
+                { id: 'sales', label: '💼 Sales Pipeline', icon: Zap, color: 'var(--brand-amber)' },
+                { id: 'operations', label: '🏗️ Field Operations & Staff', icon: HardHat, color: 'var(--brand-whatsapp)' },
+                { id: 'settings', label: '⚙️ Settings & Quotas', icon: Sparkles, color: '#a78bfa' },
               ].map((pill) => {
                 const PillIcon = pill.icon;
                 return (
@@ -298,40 +297,44 @@ export default function DashboardPage() {
               })}
             </div>
 
-            {/* Metrics Grid with Vibe Depth */}
-            {/* Metrics Grid with Vibe Depth - Clickable Quick Tabs */}
+            {/* Metrics Grid with Vibe Depth - 4 Unified Pillars */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '18px' }}>
               
+              {/* Pillar 1: AI Workforce */}
               <div 
-                onClick={() => setActiveTab('employees')}
+                onClick={() => setActiveTab('ai_workforce')}
                 role="button"
                 tabIndex={0}
-                className="vibe-stat-card vibe-card-glow-green" 
+                className="vibe-stat-card vibe-card-glow-indigo" 
                 style={{ 
                   cursor: 'pointer', 
                   transition: 'all 0.22s cubic-bezier(0.16, 1, 0.3, 1)', 
                   position: 'relative',
                 }}
-                title="Click to open Staff ID Generator & Role Roster Engine"
+                title="Click to open Autonomous AI Workforce Hub"
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                  <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>Staff IDs & Roster</span>
-                  <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(37, 211, 102, 0.12)', border: '1px solid rgba(37, 211, 102, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <HardHat size={18} color="var(--brand-whatsapp)" />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>AI Workforce</span>
+                    <span style={{ fontSize: '0.66rem', padding: '1px 5px', borderRadius: '4px', background: 'rgba(99, 102, 241, 0.15)', color: '#818cf8', fontWeight: 700 }}>PILLAR 1</span>
+                  </div>
+                  <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(99, 102, 241, 0.12)', border: '1px solid rgba(99, 102, 241, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Bot size={18} color="var(--brand-primary-light)" />
                   </div>
                 </div>
-                <div style={{ fontSize: '2.1rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.03em' }}>
-                  {employeesCount} Staff
+                <div style={{ fontSize: '2.1rem', fontWeight: 800, color: 'var(--brand-primary-light)', letterSpacing: '-0.03em' }}>
+                  4 Agents
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '8px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.76rem', color: 'var(--brand-whatsapp)' }}>
-                    <TrendingUp size={13} />
-                    <span>Hinglish & English Duty Logs synced</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.76rem', color: 'var(--text-dim)' }}>
+                    <Sparkles size={13} color="var(--brand-primary-light)" />
+                    <span>Neha ➔ Pooja ➔ Ritik ➔ Kabir</span>
                   </div>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--brand-whatsapp)', fontWeight: 700 }}>Open Tab →</span>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--brand-primary-light)', fontWeight: 700 }}>Open Hub →</span>
                 </div>
               </div>
 
+              {/* Pillar 2: Sales Pipeline */}
               <div 
                 onClick={() => setActiveTab('sales')}
                 role="button"
@@ -345,7 +348,10 @@ export default function DashboardPage() {
                 title="Click to view IndiaMart & Google Leads Sales Pipeline"
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                  <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>IndiaMart & Google Leads</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>Sales Pipeline</span>
+                    <span style={{ fontSize: '0.66rem', padding: '1px 5px', borderRadius: '4px', background: 'rgba(245, 158, 11, 0.15)', color: '#fbbf24', fontWeight: 700 }}>PILLAR 2</span>
+                  </div>
                   <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(245, 158, 11, 0.12)', border: '1px solid rgba(245, 158, 11, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Zap size={18} color="var(--brand-amber)" />
                   </div>
@@ -356,44 +362,49 @@ export default function DashboardPage() {
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '8px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.76rem', color: 'var(--text-dim)' }}>
                     <TrendingUp size={13} />
-                    <span>{leadsCount} Active buyer inquiries auto-scored</span>
+                    <span>{leadsCount} Inquiries auto-scored</span>
                   </div>
                   <span style={{ fontSize: '0.72rem', color: 'var(--brand-amber)', fontWeight: 700 }}>Open Tab →</span>
                 </div>
               </div>
 
+              {/* Pillar 3: Field Operations */}
               <div 
-                onClick={() => setActiveTab('bills')}
+                onClick={() => setActiveTab('operations')}
                 role="button"
                 tabIndex={0}
-                className="vibe-stat-card vibe-card-glow-indigo" 
+                className="vibe-stat-card vibe-card-glow-green" 
                 style={{ 
                   cursor: 'pointer', 
                   transition: 'all 0.22s cubic-bezier(0.16, 1, 0.3, 1)', 
                   position: 'relative',
                 }}
-                title="Click to open Bills & Excel Ledger Hub"
+                title="Click to open Field Operations (Staff Roster, Ledger & Chat)"
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                  <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>Pending Ledger Bills</span>
-                  <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(99, 102, 241, 0.12)', border: '1px solid rgba(99, 102, 241, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <FileSpreadsheet size={18} color="var(--brand-primary-light)" />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>Field Operations</span>
+                    <span style={{ fontSize: '0.66rem', padding: '1px 5px', borderRadius: '4px', background: 'rgba(37, 211, 102, 0.15)', color: '#25d366', fontWeight: 700 }}>PILLAR 3</span>
+                  </div>
+                  <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(37, 211, 102, 0.12)', border: '1px solid rgba(37, 211, 102, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <HardHat size={18} color="var(--brand-whatsapp)" />
                   </div>
                 </div>
-                <div style={{ fontSize: '2.1rem', fontWeight: 800, color: 'var(--brand-primary-light)', letterSpacing: '-0.03em' }}>
-                  3 Invoices
+                <div style={{ fontSize: '2.1rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.03em' }}>
+                  {employeesCount} Staff
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '8px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.76rem', color: 'var(--brand-primary-light)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.76rem', color: 'var(--brand-whatsapp)' }}>
                     <CheckCircle2 size={13} />
-                    <span>GST ITC & Excel exports reconciled</span>
+                    <span>Roster, Ledger & Ops Chat Synced</span>
                   </div>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--brand-primary-light)', fontWeight: 700 }}>Open Tab →</span>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--brand-whatsapp)', fontWeight: 700 }}>Open Ops →</span>
                 </div>
               </div>
 
+              {/* Pillar 4: Settings & Quotas */}
               <div 
-                onClick={() => setActiveTab('calling')}
+                onClick={() => setActiveTab('settings')}
                 role="button"
                 tabIndex={0}
                 className="vibe-stat-card vibe-card-glow-amber" 
@@ -402,26 +413,26 @@ export default function DashboardPage() {
                   transition: 'all 0.22s cubic-bezier(0.16, 1, 0.3, 1)', 
                   position: 'relative',
                 }}
-                title="Click to open Pooja Sharma's Calling Cockpit"
+                title="Click to manage Settings & Subscription"
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>Pooja Sharma (AI SDR)</span>
-                    <span style={{ fontSize: '0.66rem', padding: '1px 5px', borderRadius: '4px', background: 'rgba(236, 72, 153, 0.15)', color: '#ec4899', fontWeight: 700 }}>EMP-AI-01</span>
+                    <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>Settings & Quota</span>
+                    <span style={{ fontSize: '0.66rem', padding: '1px 5px', borderRadius: '4px', background: 'rgba(236, 72, 153, 0.15)', color: '#ec4899', fontWeight: 700 }}>PILLAR 4</span>
                   </div>
                   <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(236, 72, 153, 0.12)', border: '1px solid rgba(236, 72, 153, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <PhoneCall size={18} color={business.subscriptionTier !== 'starter' ? '#ec4899' : 'var(--text-dim)'} />
+                    <Sparkles size={18} color="#ec4899" />
                   </div>
                 </div>
-                <div style={{ fontSize: '1.85rem', fontWeight: 800, color: business.subscriptionTier !== 'starter' ? '#ec4899' : 'var(--text-dim)', letterSpacing: '-0.03em' }}>
-                  {business.subscriptionTier !== 'starter' ? `${business.monthlyQuota?.aiCallingMinutesUsed || 0} / ${business.monthlyQuota?.aiCallingMinutes || (business.subscriptionTier === 'premium' ? 600 : 120)} Mins` : 'Locked'}
+                <div style={{ fontSize: '1.85rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.03em' }}>
+                  {business.subscriptionTier.toUpperCase()}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '8px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.76rem', color: business.subscriptionTier !== 'starter' ? 'var(--text-muted)' : 'var(--text-dim)' }}>
-                    <Activity size={13} color="#ec4899" />
-                    <span>{business.subscriptionTier !== 'starter' ? `${callsCount} Calls Dialed • Bilingual Voice` : 'Included in Growth (120m) & Premium'}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.76rem', color: 'var(--text-dim)' }}>
+                    <PhoneCall size={13} color="#ec4899" />
+                    <span>{business.monthlyQuota?.aiCallingMinutesUsed || 0}/{business.monthlyQuota?.aiCallingMinutes || 120} Calling Mins</span>
                   </div>
-                  <span style={{ fontSize: '0.72rem', color: '#ec4899', fontWeight: 700 }}>Open Desk →</span>
+                  <span style={{ fontSize: '0.72rem', color: '#ec4899', fontWeight: 700 }}>Manage →</span>
                 </div>
               </div>
 
@@ -612,30 +623,8 @@ export default function DashboardPage() {
           </div>
         )}
 
-        {/* TAB: TEAM OPS CHAT & INTELLIGENCE HUB */}
-        {activeTab === 'ops_chat' && (
-          <TeamOpsChatHub
-            business={business}
-            onRefreshData={handleRefreshAll}
-          />
-        )}
-
-        {/* TAB 2: WHATSAPP SIMULATOR (Bilingual Hinglish / English) */}
-        {activeTab === 'whatsapp' && (
-          <WhatsAppSimulator
-            business={business}
-            onRefreshData={handleRefreshAll}
-            onOpenUpgrade={() => setShowUpgradeModal(true)}
-          />
-        )}
-
-        {/* TAB 3: STAFF & ROLE ENGINE */}
-        {activeTab === 'employees' && (
-          <EmployeeManager onRefresh={handleRefreshAll} />
-        )}
-
-        {/* TAB: AUTONOMOUS AI EMPLOYEE AGENTS DEPARTMENT */}
-        {(activeTab === 'ai_agents' || activeTab === 'pipeline' || activeTab === 'calling' || activeTab === 'meta_ads' || activeTab === 'connectors' || activeTab === 'ritik') && (
+        {/* PILLAR 1: AI WORKFORCE (4 Employees + Autonomous Scenario) */}
+        {(activeTab === 'ai_workforce' || activeTab === 'ai_agents' || activeTab === 'pipeline' || activeTab === 'calling' || activeTab === 'meta_ads' || activeTab === 'connectors' || activeTab === 'ritik') && (
           <AIEmployeeHub
             business={business}
             onRefreshData={handleRefreshAll}
@@ -652,12 +641,7 @@ export default function DashboardPage() {
           />
         )}
 
-        {/* TAB 5: BILLS, GST & EXCEL HUB */}
-        {activeTab === 'bills' && (
-          <BillsAndExcelHub onRefresh={handleRefreshAll} />
-        )}
-
-        {/* TAB 6: SALES PIPELINE */}
+        {/* PILLAR 2: SALES PIPELINE & LEADS */}
         {activeTab === 'sales' && (
           <SalesPipeline
             onRefresh={handleRefreshAll}
@@ -665,27 +649,32 @@ export default function DashboardPage() {
           />
         )}
 
-        {/* TAB 7: TENDER REPORTS */}
-        {activeTab === 'reports' && (
-          <TenderReports onRefresh={handleRefreshAll} />
-        )}
-
-        {/* TAB 9: SUBSCRIPTIONS & PLANS */}
-        {activeTab === 'billing' && (
-          <SubscriptionManager
+        {/* PILLAR 3: FIELD & SITE OPERATIONS */}
+        {(activeTab === 'operations' || activeTab === 'employees' || activeTab === 'bills' || activeTab === 'ops_chat' || activeTab === 'whatsapp') && (
+          <OperationsHub
             business={business}
-            onRefresh={handleRefreshAll}
+            onRefreshData={handleRefreshAll}
+            onOpenUpgrade={() => setShowUpgradeModal(true)}
+            initialSubTab={
+              activeTab === 'bills' ? 'bills' :
+              activeTab === 'ops_chat' ? 'ops_chat' :
+              activeTab === 'whatsapp' ? 'whatsapp' : 'employees'
+            }
           />
         )}
 
-        {/* TAB 10: PROFILE & BUSINESS SETTINGS */}
-        {(activeTab === 'profile' || activeTab === 'settings') && (
-          <ProfileAndSettings
+        {/* PILLAR 4: SETTINGS & SUBSCRIPTIONS */}
+        {(activeTab === 'settings' || activeTab === 'billing' || activeTab === 'profile' || activeTab === 'reports' || activeTab === 'database') && (
+          <SettingsHub
             business={business}
-            onRefresh={handleRefreshAll}
-            onNavigateBilling={() => setActiveTab('billing')}
+            onRefreshData={handleRefreshAll}
             onToggleTheme={handleToggleTheme}
             currentTheme={theme}
+            initialSubTab={
+              activeTab === 'billing' ? 'billing' :
+              activeTab === 'reports' ? 'reports' :
+              activeTab === 'database' ? 'database' : 'profile'
+            }
           />
         )}
 
@@ -756,44 +745,44 @@ export default function DashboardPage() {
           className={`mobile-nav-item ${activeTab === 'overview' ? 'active' : ''}`}
           aria-label="Fleet Overview"
         >
-          <Bot size={20} />
+          <Activity size={20} />
           <span>Fleet</span>
         </button>
 
         <button
-          onClick={() => setActiveTab('ops_chat')}
-          className={`mobile-nav-item ${activeTab === 'ops_chat' ? 'active' : ''}`}
-          aria-label="Team Ops Chat"
+          onClick={() => setActiveTab('ai_workforce')}
+          className={`mobile-nav-item ${['ai_workforce', 'ai_agents', 'pipeline', 'calling', 'connectors', 'ritik', 'meta_ads'].includes(activeTab) ? 'active' : ''}`}
+          aria-label="AI Workforce"
         >
-          <Users size={20} />
-          <span>Team Ops</span>
-        </button>
-
-        <button
-          onClick={() => setActiveTab('whatsapp')}
-          className={`mobile-nav-item ${activeTab === 'whatsapp' ? 'active' : ''}`}
-          aria-label="WhatsApp Simulator"
-        >
-          <MessageSquare size={20} />
-          <span>WhatsApp</span>
+          <Bot size={20} />
+          <span>AI Staff</span>
         </button>
 
         <button
           onClick={() => setActiveTab('sales')}
           className={`mobile-nav-item ${activeTab === 'sales' ? 'active' : ''}`}
-          aria-label="IndiaMart Leads"
+          aria-label="Sales Pipeline"
         >
           <Zap size={20} />
-          <span>Leads</span>
+          <span>Sales</span>
         </button>
 
         <button
-          onClick={() => setShowCommandPalette(true)}
-          className="mobile-nav-item"
-          aria-label="More Modules"
+          onClick={() => setActiveTab('operations')}
+          className={`mobile-nav-item ${['operations', 'employees', 'bills', 'ops_chat', 'whatsapp'].includes(activeTab) ? 'active' : ''}`}
+          aria-label="Field Operations"
         >
-          <Layers size={20} />
-          <span>More</span>
+          <HardHat size={20} />
+          <span>Ops</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('settings')}
+          className={`mobile-nav-item ${['settings', 'billing', 'profile', 'reports', 'database'].includes(activeTab) ? 'active' : ''}`}
+          aria-label="Settings & Quota"
+        >
+          <Sparkles size={20} />
+          <span>Settings</span>
         </button>
       </nav>
 

@@ -22,7 +22,8 @@ import {
   Sun,
   Moon,
   Home,
-  CheckCircle2
+  CheckCircle2,
+  Activity
 } from 'lucide-react';
 import { Business, SubscriptionTier } from '@/lib/types';
 
@@ -57,46 +58,47 @@ export default function Navbar({
   currentTheme = 'dark',
   onToggleTheme,
 }: NavbarProps) {
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-
-  const getBadgeClass = (tier: SubscriptionTier) => {
-    switch (tier) {
-      case 'premium':
-        return 'badge-premium';
-      case 'growth':
-        return 'badge-ai';
-      default:
-        return 'badge-whatsapp';
-    }
-  };
-
-  const allTabs = [
-    { id: 'overview', label: 'Fleet Overview', icon: Bot, category: 'core' },
-    { id: 'pipeline', label: '⚡ Neha➔Pooja➔Ritik', icon: Zap, badge: 'SCENARIO', category: 'ai_agents' },
-    { id: 'ai_agents', label: 'AI Employees Hub', icon: Bot, badge: '4 AGENTS', category: 'ai_agents' },
-    { id: 'connectors', label: '1. Neha (AI Research)', icon: Globe, category: 'ai_agents' },
+  const primaryTabs = [
     { 
-      id: 'calling', 
-      label: '2. Pooja (AI Calling)', 
-      icon: PhoneCall, 
-      badge: business.subscriptionTier === 'premium' ? '10h' : business.subscriptionTier === 'growth' ? '2h' : 'VOICE',
-      category: 'ai_agents' 
+      id: 'overview', 
+      label: 'Fleet Overview', 
+      icon: Activity, 
+      badge: 'LIVE' 
     },
-    { id: 'ritik', label: '3. Ritik (AI WhatsApp)', icon: MessageSquare, badge: 'CLOSER', category: 'ai_agents' },
-    { id: 'meta_ads', label: 'Kabir (AI Ads Manager)', icon: Video, badge: 'AUTONOMOUS', category: 'ai_agents' },
-    { id: 'ops_chat', label: 'Team Ops Chat', icon: Users, badge: 'LIVE', category: 'core' },
-    { id: 'whatsapp', label: 'WhatsApp Simulator', icon: MessageSquare, category: 'core' },
-    { id: 'employees', label: 'Human Staff Roster', icon: HardHat, category: 'core' },
-    { id: 'sales', label: 'IndiaMart & Google Leads', icon: Zap, category: 'growth' },
-    { id: 'bills', label: 'Bills & GST Hub', icon: FileSpreadsheet, category: 'finance' },
-    { id: 'reports', label: 'Tender Reports', icon: Building2, category: 'finance' },
-    { id: 'billing', label: 'Plans & Subscription', icon: Sparkles, category: 'system' },
-    { id: 'profile', label: 'Profile & Settings', icon: User, category: 'system' },
+    { 
+      id: 'ai_workforce', 
+      label: '🤖 AI Workforce', 
+      icon: Bot, 
+      badge: '4 AGENTS',
+      highlight: true
+    },
+    { 
+      id: 'sales', 
+      label: '💼 Sales & Leads', 
+      icon: Zap, 
+      badge: 'PIPELINE' 
+    },
+    { 
+      id: 'operations', 
+      label: '🏗️ Operations', 
+      icon: HardHat, 
+      badge: 'CREW & BILLS' 
+    },
+    { 
+      id: 'settings', 
+      label: '⚙️ Settings & Plans', 
+      icon: Sparkles,
+      badge: business.subscriptionTier.toUpperCase()
+    },
   ];
 
-  const visibleTabs = selectedCategory === 'all' 
-    ? allTabs 
-    : allTabs.filter(t => t.category === selectedCategory);
+  const isTabActive = (tabId: string) => {
+    if (activeTab === tabId) return true;
+    if (tabId === 'ai_workforce' && ['ai_agents', 'pipeline', 'calling', 'connectors', 'ritik', 'meta_ads'].includes(activeTab)) return true;
+    if (tabId === 'operations' && ['employees', 'bills', 'ops_chat', 'whatsapp'].includes(activeTab)) return true;
+    if (tabId === 'settings' && ['billing', 'profile', 'reports'].includes(activeTab)) return true;
+    return false;
+  };
 
   return (
     <header className="top-nav" style={{ backdropFilter: 'blur(20px)', borderBottom: '1px solid var(--border-subtle)', position: 'sticky', top: 0, zIndex: 90 }}>
@@ -258,7 +260,7 @@ export default function Navbar({
         </div>
       </div>
 
-      {/* Modern Vibe Tab Bar with Filter Category Pills */}
+      {/* Clean 4-5 Pillar Navigation Bar */}
       <div style={{
         borderTop: '1px solid var(--border-subtle)',
         background: 'var(--bg-secondary)',
@@ -266,93 +268,55 @@ export default function Navbar({
         <div style={{
           maxWidth: '1440px',
           margin: '0 auto',
-          padding: '6px 24px',
+          padding: '8px 24px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           gap: '12px',
           flexWrap: 'wrap',
         }}>
-          {/* Quick Category Filter Capsule */}
+          {/* Active Navigation Pillars */}
           <div style={{
             display: 'flex',
-            alignItems: 'center',
-            gap: '3px',
-            overflowX: 'auto',
-            padding: '3px 4px',
-            borderRadius: '8px',
-            background: 'rgba(255, 255, 255, 0.03)',
-            border: '1px solid var(--border-subtle)',
-          }}>
-            {[
-              { id: 'all', label: 'All Modules' },
-              { id: 'ai_agents', label: '🤖 AI Employees' },
-              { id: 'core', label: 'Operations' },
-              { id: 'growth', label: 'Growth & Leads' },
-              { id: 'finance', label: 'Accounts & Bills' },
-              { id: 'system', label: 'Settings & Plans' },
-            ].map((cat) => {
-              const isSelected = selectedCategory === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(cat.id)}
-                  style={{
-                    padding: '4px 10px',
-                    borderRadius: '6px',
-                    border: 'none',
-                    background: isSelected ? 'var(--brand-primary)' : 'transparent',
-                    color: isSelected ? '#ffffff' : 'var(--text-dim)',
-                    fontSize: '0.74rem',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    transition: 'all 0.18s ease',
-                    whiteSpace: 'nowrap',
-                    boxShadow: isSelected ? '0 2px 8px rgba(99, 102, 241, 0.35)' : 'none',
-                  }}
-                >
-                  {cat.label}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Active Navigation Pills */}
-          <div style={{
-            display: 'flex',
-            gap: '5px',
+            gap: '8px',
             overflowX: 'auto',
             whiteSpace: 'nowrap',
             padding: '2px 0',
             flex: 1,
             justifyContent: 'flex-start',
           }}>
-            {visibleTabs.map((tab) => {
+            {primaryTabs.map((tab) => {
               const Icon = tab.icon;
-              const isActive = activeTab === tab.id;
+              const isActive = isTabActive(tab.id);
               return (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`vibe-nav-pill ${isActive ? 'active' : ''}`}
                   style={{
-                    padding: '6px 12px',
-                    fontSize: '0.81rem',
-                    borderRadius: '8px',
+                    padding: '8px 16px',
+                    fontSize: '0.86rem',
+                    fontWeight: isActive ? 700 : 500,
+                    borderRadius: '10px',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '7px',
+                    gap: '8px',
+                    background: isActive ? (tab.id === 'ai_workforce' ? 'rgba(99, 102, 241, 0.22)' : 'rgba(255, 255, 255, 0.08)') : 'transparent',
+                    border: isActive ? (tab.id === 'ai_workforce' ? '1px solid var(--brand-primary)' : '1px solid rgba(255, 255, 255, 0.15)') : '1px solid transparent',
+                    color: isActive ? '#ffffff' : 'var(--text-muted)',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
                   }}
                 >
-                  <Icon size={14} color={isActive ? 'var(--brand-primary-light)' : 'inherit'} />
+                  <Icon size={16} color={isActive ? (tab.id === 'ai_workforce' ? 'var(--brand-primary-light)' : 'var(--brand-whatsapp)') : 'var(--text-dim)'} />
                   <span>{tab.label}</span>
                   {tab.badge && (
                     <span style={{
                       fontSize: '0.62rem',
-                      padding: '1px 6px',
+                      padding: '2px 6px',
                       borderRadius: '999px',
-                      background: tab.badge === 'ACTIVE' || tab.badge === 'LIVE' ? 'rgba(37, 211, 102, 0.2)' : 'rgba(245, 158, 11, 0.2)',
-                      color: tab.badge === 'ACTIVE' || tab.badge === 'LIVE' ? '#25d366' : '#f59e0b',
+                      background: tab.id === 'ai_workforce' ? 'rgba(99, 102, 241, 0.3)' : 'rgba(37, 211, 102, 0.2)',
+                      color: tab.id === 'ai_workforce' ? '#a5b4fc' : '#25d366',
                       fontWeight: 700,
                       border: '1px solid rgba(255, 255, 255, 0.1)',
                       lineHeight: 1.2,
@@ -365,6 +329,12 @@ export default function Navbar({
             })}
           </div>
 
+          {/* Quick Active Mode Tag */}
+          <div style={{ display: 'none', alignItems: 'center', gap: '6px' }} className="desktop-only-flex">
+            <span style={{ fontSize: '0.74rem', color: 'var(--text-dim)' }}>
+              Mode: <strong style={{ color: 'var(--text-main)' }}>Unified AI Workforce</strong>
+            </span>
+          </div>
         </div>
       </div>
     </header>

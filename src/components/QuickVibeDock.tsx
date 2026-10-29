@@ -2,13 +2,12 @@
 
 import React from 'react';
 import { 
+  Activity,
   Bot, 
-  MessageSquare, 
-  Users, 
-  Video, 
-  PhoneCall, 
+  Zap, 
+  HardHat, 
+  Sparkles, 
   Search, 
-  Zap,
   BookOpen
 } from 'lucide-react';
 
@@ -26,19 +25,26 @@ export default function QuickVibeDock({
   onOpenGuide,
 }: QuickVibeDockProps) {
   const dockItems = [
-    { id: 'overview', label: 'Fleet', icon: Bot },
-    { id: 'pipeline', label: 'Scenario', icon: Zap, badge: 'AUTO' },
-    { id: 'ai_agents', label: 'AI Staff', icon: Bot, badge: '4' },
-    { id: 'calling', label: 'Pooja', icon: PhoneCall },
-    { id: 'ritik', label: 'Ritik', icon: MessageSquare },
-    { id: 'ops_chat', label: 'Team Chat', icon: Users, badge: 'AI' },
+    { id: 'overview', label: 'Fleet', icon: Activity },
+    { id: 'ai_workforce', label: 'AI Staff', icon: Bot, badge: '4' },
+    { id: 'sales', label: 'Sales', icon: Zap },
+    { id: 'operations', label: 'Operations', icon: HardHat },
+    { id: 'settings', label: 'Settings', icon: Sparkles },
   ];
+
+  const isItemActive = (itemId: string) => {
+    if (activeTab === itemId) return true;
+    if (itemId === 'ai_workforce' && ['ai_agents', 'pipeline', 'calling', 'connectors', 'ritik', 'meta_ads'].includes(activeTab)) return true;
+    if (itemId === 'operations' && ['employees', 'bills', 'ops_chat', 'whatsapp'].includes(activeTab)) return true;
+    if (itemId === 'settings' && ['billing', 'profile', 'reports'].includes(activeTab)) return true;
+    return false;
+  };
 
   return (
     <aside aria-label="Quick Navigation Dock" className="vibe-dock">
       {dockItems.map((item) => {
         const Icon = item.icon;
-        const isActive = activeTab === item.id;
+        const isActive = isItemActive(item.id);
         return (
           <button
             key={item.id}
