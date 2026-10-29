@@ -72,16 +72,18 @@ export default function Navbar({
 
   const allTabs = [
     { id: 'overview', label: 'Fleet Overview', icon: Bot, category: 'core' },
-    { id: 'ai_agents', label: 'AI Employees Hub', icon: Bot, badge: '3 AGENTS', category: 'ai_agents' },
+    { id: 'pipeline', label: '⚡ Neha➔Pooja➔Ritik', icon: Zap, badge: 'SCENARIO', category: 'ai_agents' },
+    { id: 'ai_agents', label: 'AI Employees Hub', icon: Bot, badge: '4 AGENTS', category: 'ai_agents' },
+    { id: 'connectors', label: '1. Neha (AI Research)', icon: Globe, category: 'ai_agents' },
     { 
       id: 'calling', 
-      label: 'Pooja (AI Calling)', 
+      label: '2. Pooja (AI Calling)', 
       icon: PhoneCall, 
       badge: business.subscriptionTier === 'premium' ? '10h' : business.subscriptionTier === 'growth' ? '2h' : 'VOICE',
       category: 'ai_agents' 
     },
+    { id: 'ritik', label: '3. Ritik (AI WhatsApp)', icon: MessageSquare, badge: 'CLOSER', category: 'ai_agents' },
     { id: 'meta_ads', label: 'Kabir (AI Ads Manager)', icon: Video, badge: 'AUTONOMOUS', category: 'ai_agents' },
-    { id: 'connectors', label: 'Neha (AI Researcher)', icon: Globe, category: 'ai_agents' },
     { id: 'ops_chat', label: 'Team Ops Chat', icon: Users, badge: 'LIVE', category: 'core' },
     { id: 'whatsapp', label: 'WhatsApp Simulator', icon: MessageSquare, category: 'core' },
     { id: 'employees', label: 'Human Staff Roster', icon: HardHat, category: 'core' },

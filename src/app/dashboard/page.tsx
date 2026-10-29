@@ -635,15 +635,17 @@ export default function DashboardPage() {
         )}
 
         {/* TAB: AUTONOMOUS AI EMPLOYEE AGENTS DEPARTMENT */}
-        {(activeTab === 'ai_agents' || activeTab === 'calling' || activeTab === 'meta_ads' || activeTab === 'connectors') && (
+        {(activeTab === 'ai_agents' || activeTab === 'pipeline' || activeTab === 'calling' || activeTab === 'meta_ads' || activeTab === 'connectors' || activeTab === 'ritik') && (
           <AIEmployeeHub
             business={business}
             onRefreshData={handleRefreshAll}
             onOpenUpgrade={() => setShowUpgradeModal(true)}
             initialAgent={
+              activeTab === 'pipeline' ? 'pipeline' :
               activeTab === 'calling' ? 'pooja' :
               activeTab === 'meta_ads' ? 'kabir' :
-              activeTab === 'connectors' ? 'neha' : 'all'
+              activeTab === 'connectors' ? 'neha' :
+              activeTab === 'ritik' ? 'ritik' : 'all'
             }
             activeLeadForCall={activeLeadForCall}
             onTriggerCallFromLead={handleTriggerCallFromLead}

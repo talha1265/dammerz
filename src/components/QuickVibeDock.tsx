@@ -27,11 +27,11 @@ export default function QuickVibeDock({
 }: QuickVibeDockProps) {
   const dockItems = [
     { id: 'overview', label: 'Fleet', icon: Bot },
-    { id: 'ai_agents', label: 'AI Employees', icon: Bot, badge: '3' },
-    { id: 'calling', label: 'Pooja (Voice)', icon: PhoneCall },
-    { id: 'meta_ads', label: 'Kabir (Ads)', icon: Video },
+    { id: 'pipeline', label: 'Scenario', icon: Zap, badge: 'AUTO' },
+    { id: 'ai_agents', label: 'AI Staff', icon: Bot, badge: '4' },
+    { id: 'calling', label: 'Pooja', icon: PhoneCall },
+    { id: 'ritik', label: 'Ritik', icon: MessageSquare },
     { id: 'ops_chat', label: 'Team Chat', icon: Users, badge: 'AI' },
-    { id: 'whatsapp', label: 'WhatsApp', icon: MessageSquare },
   ];
 
   return (
